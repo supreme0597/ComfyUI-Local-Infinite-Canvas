@@ -382,13 +382,14 @@ export function CanvasNodePromptPanel({ node, nodes, isRunning, onPromptChange, 
 
     const captionPrompt = async () => {
         if (!captionEngine || !canCaption) return;
+        const instruction = (draftRef.current || "").trim();
         const controller = new AbortController();
         registerCaptionJob(node.id, controller);
         onConfigChange(node.id, { captionStatus: "running", captionEngineUsed: captionEngine, captionPrompt: undefined, captionError: undefined });
         try {
             const images = await resolveCanvasReferenceImages(imageReferences.slice(0, 1), nodes);
             if (!images.length) throw new Error(t("canvas.promptPanel.captionNoImage"));
-            const result = await requestImageCaption(config, { images, language: "zh", engine: captionEngine, cloud: captionEngine === "cloud" ? { baseUrl: (config.promptCloudBaseUrl || "").trim(), apiKey: (config.promptCloudApiKey || "").trim(), model: (config.promptCloudModel || "").trim() } : undefined }, { signal: controller.signal });
+            const result = await requestImageCaption(config, { images, language: "zh", instruction: instruction || undefined, engine: captionEngine, cloud: captionEngine === "cloud" ? { baseUrl: (config.promptCloudBaseUrl || "").trim(), apiKey: (config.promptCloudApiKey || "").trim(), model: (config.promptCloudModel || "").trim() } : undefined }, { signal: controller.signal });
             onConfigChange(node.id, { captionStatus: "done", captionPrompt: result.prompt, captionEngineUsed: result.engine || captionEngine });
         } catch (error) {
             if (controller.signal.aborted) clearCaptionPreview();
