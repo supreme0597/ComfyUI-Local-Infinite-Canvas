@@ -1,3 +1,5 @@
+import type { PoseSettings } from "@/lib/canvas/pose-portrait";
+
 export type Position = {
     x: number;
     y: number;
@@ -83,6 +85,9 @@ export type CanvasMossLayout = {
 };
 
 export type CanvasNodeMetadata = {
+    posePortrait?: PoseSettings;
+    // 阶段节点（卡片导出的文本/图片）用它记录来源：哪一轮、哪一步、用的什么画风。
+    poseStage?: { runId?: string; stage?: "text" | "person" | "action" | "output"; pending?: boolean; layout?: string; style?: string; pose?: string };
     content?: string;
     composerContent?: string;
     prompt?: string;

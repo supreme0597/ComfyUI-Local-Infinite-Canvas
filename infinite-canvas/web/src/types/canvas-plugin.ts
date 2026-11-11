@@ -10,7 +10,7 @@ export type CanvasNodeResource = { kind: CanvasResourceKind; text?: string; url?
 
 // AI generation capabilities injected by the host, reusing its model and credential configuration.
 export type GenerateOptions = { signal?: AbortSignal; references?: string[]; model?: string };
-export type GenerateImageOptions = GenerateOptions & { count?: number; size?: string; params?: Record<string, unknown> };
+export type GenerateImageOptions = GenerateOptions & { count?: number; size?: string; params?: Record<string, unknown>; mode?: string };
 export type GenerateImageResult = { images: string[] };
 export type GenerateVideoOptions = GenerateOptions & { size?: string; seconds?: string; params?: Record<string, unknown> };
 export type GenerateVideoResult = { url: string; storageKey?: string; mimeType: string; width?: number; height?: number; durationMs?: number };

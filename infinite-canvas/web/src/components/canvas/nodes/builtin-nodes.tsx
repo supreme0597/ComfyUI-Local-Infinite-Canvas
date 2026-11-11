@@ -3,6 +3,7 @@ import { message } from "antd";
 import { saveAs } from "file-saver";
 
 import i18n from "@/i18n";
+import { posePortraitDefinition } from "./pose-portrait-node";
 
 import { NODE_SPECS } from "@/constant/canvas";
 import { registerNodeDefinitions } from "@/lib/canvas/node-registry";
@@ -98,5 +99,5 @@ let registered = false;
 export function registerBuiltinNodes() {
     if (registered) return;
     registered = true;
-    registerNodeDefinitions(BUILTIN_DEFINITIONS, "builtin");
+    registerNodeDefinitions([...BUILTIN_DEFINITIONS, posePortraitDefinition], "builtin");
 }
